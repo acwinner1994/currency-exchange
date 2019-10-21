@@ -10,6 +10,20 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
+
+mongoose.connect("mongodb+srv://admin:test123@cluster0-b4qcr.mongodb.net/Currency_exchangeDB",{useNewUrlParser:true});
+
+const userSchema=new mongoose.Schema({
+  user_id:String,
+  user_password:String
+});
+const userModel=mongoose.model("user",userSchema);
+userModel.insertMany([{user_id:"gfz159357",user_password:"zxc159357"}],function(err){});
+
+
+
+
+
 app.get("/",function(req,res){
   res.send("hi");
 });
