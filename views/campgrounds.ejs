@@ -1,0 +1,36 @@
+<% include partial/header%>
+
+
+
+<!-- this is for the spacing of the each side -->
+<div class="container">
+
+  <!-- jumbotron is the top outline look -->
+    <header class="jumbotron">
+      <div class="container">
+        <h1>Welcome to YelpCamp page~</h1>
+        <p>view our hand-picked campgrounds from all over the world </p>
+        <!-- this <p></p> will start a new line -->
+        <p>
+          <!-- btn is a transparent button shape. btn-primary is the blue button style. btn-large is the large size -->
+          <a class="btn btn-primary" href="/campgrounds/new">post a new camp!</a>
+        </p>
+      </div>
+    </header>
+
+    <!-- div -row- col-md-3 col-sm-6 is the grid system of bootstrap -->
+    <div class="row text-center">
+      <% campgrounds.forEach(function(campgrounds){%>
+        <div class="col-md-3 col-sm-6">
+
+          <!-- thumbnail is the gray outline -->
+            <img  class="img-thumbnail" src="<%=campgrounds.image%>" >
+            <h4><%=campgrounds.name%></h4>
+        </div>
+      <%});%>
+    </div>
+
+
+</div>
+
+<%include partial/footer%>
