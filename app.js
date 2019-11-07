@@ -14,45 +14,59 @@ app.use(express.static("public"));
 
 mongoose.connect("mongodb+srv://admin:test123@cluster0-b4qcr.mongodb.net/Currency_exchangeDB",{useNewUrlParser:true});
 
-const userSchema=new mongoose.Schema({
-  user_id:String,
-  user_password:String
+const campSchema=new mongoose.Schema({
+  name:String,
+  image:String,
+  description:String
 });
-const userModel=mongoose.model("user",userSchema);
-userModel.insertMany([{user_id:"gfz159357",user_password:"zxc159357"}],function(err){});
+const campModel=mongoose.model("camp",campSchema);
+// campModel.insertMany([{name:"salmon greek", image:"https://wsd.casio.com/assets/img/bg_home1.jpg",description:"I like the greek,hope to fuck some ladys here"},
+// {name:"granite hill",image:"https://cdn2.outdoorphotographer.com/2019/04/OP_SPRING_MEM_OP_SLIDER-w.jpg",description:"I like the place,hope to fuck some ladys here"},
+// {name:"mountain goat's rest",image:"http://www.outdoorcouncil.asn.au/wp-content/uploads/2016/08/Outdoor-Council-of-Australia.jpg",description:"I like the place,hope to fuck some ladys here"},
+// {name:"salmon greek", image:"https://wsd.casio.com/assets/img/bg_home1.jpg",description:"I like the place,hope to fuck some ladys here"},
+// {name:"granite hill",image:"https://cdn2.outdoorphotographer.com/2019/04/OP_SPRING_MEM_OP_SLIDER-w.jpg",description:"I like the place,hope to fuck some ladys here"},
+// {name:"mountain goat's rest",image:"http://www.outdoorcouncil.asn.au/wp-content/uploads/2016/08/Outdoor-Council-of-Australia.jpg",description:"I like the place,hope to fuck some ladys here"},
+// {name:"salmon greek", image:"https://wsd.casio.com/assets/img/bg_home1.jpg",description:"I like the place,hope to fuck some ladys here"},
+// {name:"granite hill",image:"https://cdn2.outdoorphotographer.com/2019/04/OP_SPRING_MEM_OP_SLIDER-w.jpg",description:"I like the place,hope to fuck some ladys here"},
+// {name:"mountain goat's rest",image:"http://www.outdoorcouncil.asn.au/wp-content/uploads/2016/08/Outdoor-Council-of-Australia.jpg",description:"I like the place,hope to fuck some ladys here"}],function(err){});
 
-var campgrounds=[
-  {name:"salmon greek", image:"https://wsd.casio.com/assets/img/bg_home1.jpg"},
-  {name:"granite hill",image:"https://cdn2.outdoorphotographer.com/2019/04/OP_SPRING_MEM_OP_SLIDER-w.jpg"},
-  {name:"mountain goat's rest",image:"http://www.outdoorcouncil.asn.au/wp-content/uploads/2016/08/Outdoor-Council-of-Australia.jpg"},
-  {name:"salmon greek", image:"https://wsd.casio.com/assets/img/bg_home1.jpg"},
-  {name:"granite hill",image:"https://cdn2.outdoorphotographer.com/2019/04/OP_SPRING_MEM_OP_SLIDER-w.jpg"},
-  {name:"mountain goat's rest",image:"http://www.outdoorcouncil.asn.au/wp-content/uploads/2016/08/Outdoor-Council-of-Australia.jpg"},
-  {name:"salmon greek", image:"https://wsd.casio.com/assets/img/bg_home1.jpg"},
-  {name:"granite hill",image:"https://cdn2.outdoorphotographer.com/2019/04/OP_SPRING_MEM_OP_SLIDER-w.jpg"},
-  {name:"mountain goat's rest",image:"http://www.outdoorcouncil.asn.au/wp-content/uploads/2016/08/Outdoor-Council-of-Australia.jpg"}
-]
+
 
 app.get("/",function(req,res){
   res.render("landing");
 });
 
 app.get("/campgrounds",function(req,res){
-  res.render("campgrounds",{campgrounds:campgrounds});
+  campModel.find({},function(err,campgrounds){
+    if(err){
+      console.log(err);
+    }else{
+      res.render("campgrounds",{campgrounds:campgrounds});
+    }
+  });
 });
 
 app.get("/campgrounds/new",function(req,res){
   res.render("new");
 });
 
+app.get("/campgrounds/:id",function(req,res){
+  var id=req.params.id;
+  console.log(id);
+  campModel.findById(id,function(wrong,item){
+    if(wrong){console.log(wrong)}
+    else{
+      res.render("detail",{item:item});
+    }
+  });
+});
+
 app.post("/campgrounds",function(req,res){
   var name=req.body.name_of_img;
   var image=req.body.url_of_img;
-  campgrounds.push({name:name,image:image});
+  var description=req.body.description;
+  campModel.insertMany([{name:name, image:image,description:description}],function(err){});
 
-  campgrounds.forEach(function(camp){
-    console.log(camp.name);
-  });
   res.redirect("campgrounds");
 });
 
