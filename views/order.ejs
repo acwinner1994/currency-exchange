@@ -1,0 +1,26 @@
+<%include partial/header%>
+<h1>Your Orders:</h1>
+
+<% items.forEach(function(item){ %>
+  <div class="">
+    <h6><%=item.PName%></h6>
+    <p>quantity: <%=item.Quantity%></p>
+    <p><%=item.PriceSold%></p>
+    <p><%=item.TDate%></p>
+    <p>Status:<%=item.Tstatus%></p>
+    <br>
+    <br>
+  </div>
+<%});%>
+
+<%include partial/footer%>
+
+
+<!-- <form class="" action="/order" method="post">
+
+  <label for="">SAName:</label>
+  <br>
+  <input type="text" name="SAName" value="">
+
+<button type="submit" name="button">buy it!</button>
+</form> -->
