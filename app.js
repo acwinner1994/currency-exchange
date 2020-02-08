@@ -31,8 +31,8 @@ let date_ob = new Date();
 
 var userid="1";
 var userpd;
-var user_card="45";
-var user_SAName="home";
+var user_card="12";
+var user_SAName="12";
 
 //home page
 app.get("/",function(req,res){
@@ -151,7 +151,7 @@ app.post("/order",function(req,res){//add data to cart
   //userid;
  //to get a unique cartid
   var cartid=userid+req.body.pid+date_ob.getMinutes();
-  var sql1="INSERT INTO `cs631`.`CART` (`CartID`, `CID`, `SAName`, `CCNumber`, `TStatus`, `TDate`) VALUES ('"+cartid+"', '"+userid+"', '"+user_SAName+"', '"+user_card+"', 'paid', '2019/12');";
+  var sql1="INSERT INTO `cs631`.`CART` (`CartID`, `CID`, `SAName`, `CCNumber`, `TStatus`, `TDate`) VALUES ('"+cartid+"', '"+userid+"', '"+user_SAName+"', '"+user_card+"', 'paid', '2019-12-12');";
 
   con.query(sql1, function (err, result) {
     if (err) throw err;
@@ -228,7 +228,6 @@ if(port==null||port==""){
 app.listen(port, function() {
   console.log("Server started on port 3002~");
 });
-
 
 
 // app.post("/campgrounds",function(req,res){
